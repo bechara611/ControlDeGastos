@@ -1,7 +1,11 @@
 import React from 'react';
 
 const App = () => {
-  return ( <div>Dany</div>  );
+  return ( 
+    <>
+      <h2>Dany</h2>
+    </> 
+     );
 }
  
 export default App;

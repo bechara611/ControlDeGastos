@@ -5,6 +5,16 @@ import App from './App';
 import WebFont from 'webfontloader'
 import Contenedor from './Elementos/Contenedor'
 import {Route,Routes,BrowserRouter,NavLink} from 'react-router-dom'
+import InicioSesion from './Componentes/InicioSesion';
+import EditarGastos from './Componentes/EditarGastos';
+import GastosPorCategorias from './Componentes/GastosPorCategorias';
+import ListaDeGastos from './Componentes/ListaDeGastos';
+import RegistroUsuarios from './Componentes/RegistroUsuarios';
+import {Helmet} from 'react-helmet';
+import favicon from './imagenes/logo.png';
+import Fondo from './Elementos/Fondo'
+import Header from './Componentes/Header';
+
 WebFont.load({
   google: {
     families: ['Work Sans:400,500,700', 'Sans-serif']
@@ -12,11 +22,26 @@ WebFont.load({
 });
 const Index = () => {
   return (
-    <Contenedor>
-     <App>
-     </App> 
-   
+    <>
+    <Helmet>
+    <link rel="shortcut icon" href={favicon} type="image/x-icon"/>
+    </Helmet>
+    <BrowserRouter>
+    <Header></Header>
+    <Contenedor>]
+    <Routes>
+     <Route path='/iniciar-sesion' element={<InicioSesion/>}></Route>
+    <Route path='/crear-cuenta' element={<RegistroUsuarios/>}/ >
+    <Route path='/categorias' element={<GastosPorCategorias/>}/ >
+    <Route path='/lista' element={<ListaDeGastos/>}/ >
+    <Route path='/editar/:id' element={<EditarGastos/>}/ >
+    <Route path='/' element={<App/>}/ >
+    <Route path='/*' element={<App/>}/ >
+    </Routes>  
      </Contenedor>
+     </BrowserRouter>
+     <Fondo></Fondo>
+     </>
      );
 }
  
