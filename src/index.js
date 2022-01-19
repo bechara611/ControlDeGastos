@@ -28,7 +28,7 @@ const Index = () => {
     </Helmet>
     <BrowserRouter>
     <Header></Header>
-    <Contenedor>]
+    <Contenedor>
     <Routes>
      <Route path='/iniciar-sesion' element={<InicioSesion/>}></Route>
     <Route path='/crear-cuenta' element={<RegistroUsuarios/>}/ >
