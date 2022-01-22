@@ -8,7 +8,7 @@ import  {Header,Titulo,ContenedorHeader,ContenedorBotones,HeaderPrincipal} from 
 import styled from 'styled-components';
 
 
-const Svg= styled(Svglogin)`
+const Svg3= styled(Svglogin)`
 width:100%;
 max-height:6.25rem;
 margin-bottom:1.25rem;
@@ -29,7 +29,6 @@ const RegistroUsuarios = () => {
     </ContenedorHeader>
     </Header>
     <Formulario>
-    <Svg></Svg>
     <Input 
     type='email'
     name='email'
