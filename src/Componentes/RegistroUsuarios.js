@@ -7,6 +7,9 @@ import {ContenedorFiltros,Formulario,Input,InputGrande,ContenedorBoton} from './
 import  {Header,Titulo,ContenedorHeader,ContenedorBotones,HeaderPrincipal} from './../Elementos/Header'
 import styled from 'styled-components';
 import {app,auth,db} from './../firebase/FirebaseConfig'
+import {createUserWithEmailAndPassword} from 'firebase/auth'
+import { useNavigate } from 'react-router-dom';
+
 
 const Svg3= styled(Svglogin)`
 width:100%;
@@ -15,6 +18,7 @@ margin-bottom:1.25rem;
 `
 
 const RegistroUsuarios = () => {
+    const Navigate=useNavigate();
     const [correo,establecerCorreo]=useState('');
     const [password,establecerPassword]=useState('');
     const [password2,establecerPassword2]=useState('');
@@ -34,7 +38,7 @@ const RegistroUsuarios = () => {
                 break
         }
     }
-    const handleSubmit=(e)=>{
+    const handleSubmit=async (e)=>{
         e.preventDefault();
 
         //comprobamos del lado del cliente que el correo sea valido
@@ -55,12 +59,33 @@ const RegistroUsuarios = () => {
         }
 
         //si en un ningun if entra entonces ejecuta
-        console.log("registramos usuarios")
         try 
         {
-     //   auth.createUserWithEmailAndPassword(correo,password);
+      await createUserWithEmailAndPassword(auth,correo,password);
+      console.log('EL USUARIO SE HA CREADO CON EXITO')
+      Navigate('/')
         } catch (error) {
-            console.log(error);
+            let mensaje;
+            switch(error.code){
+                case 'auth/invalid-password':
+                    mensaje = 'La contraseña tiene que ser de al menos 6 caracteres.'
+                   
+                    break;
+                case 'auth/email-already-in-use':
+                    mensaje = 'Ya existe una cuenta con el correo electrónico proporcionado.'
+               
+                   
+                break;
+                case 'auth/invalid-email':
+                    mensaje = 'El correo electrónico no es válido.'
+                 
+                break;
+                default:
+                    mensaje = 'Hubo un error al intentar crear la cuenta.'
+                   
+                break;
+            }
+              console.log(mensaje);
         }
     }
     return (
