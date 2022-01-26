@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import {app,auth,db} from './../firebase/FirebaseConfig'
 import {createUserWithEmailAndPassword} from 'firebase/auth'
 import { useNavigate } from 'react-router-dom';
-
+import Alerta from '../Elementos/Alerta';
 
 const Svg3= styled(Svglogin)`
 width:100%;
@@ -22,7 +22,9 @@ const RegistroUsuarios = () => {
     const [correo,establecerCorreo]=useState('');
     const [password,establecerPassword]=useState('');
     const [password2,establecerPassword2]=useState('');
-    
+    const [estadoAlerta,cambiarEstadoAlerta]=useState(false);
+    const [alerta,cambiarAlerta]=useState({});
+    let mensaje;
     const handledChange=(e)=>{
         switch (e.target.name) {
             case 'email': 
@@ -40,21 +42,31 @@ const RegistroUsuarios = () => {
     }
     const handleSubmit=async (e)=>{
         e.preventDefault();
-
+        cambiarEstadoAlerta(false);
+        cambiarAlerta({});
         //comprobamos del lado del cliente que el correo sea valido
 
         const expresionRegular= /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/
         if (!expresionRegular.test(correo)) {
-         console.log('Please, add a valid email.')
+         cambiarEstadoAlerta(true);
+         mensaje='Please, add a valid email.'
+         cambiarAlerta({tipo:'error',mensaje:mensaje})
             return;
            //esto en caso de que no sea un correo 
         }
         if (correo==='' || password==='' || password2==='') {
-            console.log('Please, add your login information.')
+            cambiarEstadoAlerta(true);
+            mensaje='Please, add your login information.'
+            cambiarAlerta({tipo:'error',mensaje:mensaje})
+          
             return
         }
         if (password!==password2) {
-            console.log("Check your password")
+            cambiarEstadoAlerta(true);
+            mensaje="Check your password"
+            cambiarAlerta({tipo:'error',mensaje:mensaje})
+          
+            
             return
         }
 
@@ -62,30 +74,33 @@ const RegistroUsuarios = () => {
         try 
         {
       await createUserWithEmailAndPassword(auth,correo,password);
-      console.log('EL USUARIO SE HA CREADO CON EXITO')
+      cambiarEstadoAlerta(true);
+      cambiarAlerta({tipo:'exito',mensaje:'Success'})
+      
       Navigate('/')
         } catch (error) {
-            let mensaje;
+            cambiarEstadoAlerta(true);
             switch(error.code){
                 case 'auth/invalid-password':
-                    mensaje = 'La contraseña tiene que ser de al menos 6 caracteres.'
+                    mensaje = 'At least 6 characters in the password'
                    
                     break;
                 case 'auth/email-already-in-use':
-                    mensaje = 'Ya existe una cuenta con el correo electrónico proporcionado.'
+                    mensaje = 'Ops, Email already registered'
                
                    
                 break;
                 case 'auth/invalid-email':
-                    mensaje = 'El correo electrónico no es válido.'
+                    mensaje = 'Please use a valid email'
                  
                 break;
                 default:
-                    mensaje = 'Hubo un error al intentar crear la cuenta.'
+                    mensaje = 'Error.'
                    
                 break;
             }
-              console.log(mensaje);
+            cambiarAlerta({tipo:'error',mensaje:mensaje})
+             console.log(error.code)
         }
     }
     return (
@@ -124,7 +139,13 @@ const RegistroUsuarios = () => {
     onChange={(e)=>{handledChange(e)}}
     ></Input>
     <ContenedorBoton><Boton primario as='button' type='submit'>Register</Boton></ContenedorBoton>
-    
+    <Alerta
+     tipo={alerta.tipo}
+     mensaje={alerta.mensaje}
+     estadoAlerta={estadoAlerta}
+     cambiarEstadoAlerta={cambiarEstadoAlerta}
+      >
+      </Alerta>
     </Formulario>
         </> );
 }
