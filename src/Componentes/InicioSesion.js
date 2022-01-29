@@ -81,8 +81,8 @@ const InicioSesion = () => {
         } catch (error) {
             cambiarEstadoAlerta(true);
             switch(error.code){
-                case 'auth/invalid-password':
-                    mensaje = 'At least 6 characters in the password'
+                case 'auth/wrong-password':
+                    mensaje = 'Incorrect password'
                    
                     break;
                 case 'auth/email-already-in-use':
@@ -100,7 +100,7 @@ const InicioSesion = () => {
                
                 default:
                     mensaje = 'Error.'
-                   
+                   console.log(error.code)
                 break;
             }
             cambiarAlerta({tipo:'error',mensaje:mensaje})

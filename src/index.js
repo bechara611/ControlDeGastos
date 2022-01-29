@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -14,18 +14,21 @@ import {Helmet} from 'react-helmet';
 import favicon from './imagenes/logo.png';
 import Fondo from './Elementos/Fondo'
 import Header from './Elementos/Header';
-
+import {AuthProvider,AuthContext} from './Contextos/AuthContext'
+import { useAuth } from './Contextos/AuthContext';
 WebFont.load({
   google: {
     families: ['Work Sans:400,500,700', 'Sans-serif']
   }
 });
 const Index = () => {
+
   return (
     <>
     <Helmet>
     <link rel="shortcut icon" href={favicon} type="image/x-icon"/>
     </Helmet>
+<AuthProvider>
     <BrowserRouter>
     <Contenedor>
     <Routes>
@@ -39,6 +42,7 @@ const Index = () => {
     </Routes>  
      </Contenedor>
      </BrowserRouter>
+     </AuthProvider>
      <Fondo></Fondo>
      </>
      );
