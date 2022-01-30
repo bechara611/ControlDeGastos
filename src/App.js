@@ -6,12 +6,11 @@ import BotonCerrarSesion from './Elementos/BotonCerrarSesion'
 import { auth } from './firebase/FirebaseConfig';
 import { useAuth } from './Contextos/AuthContext';
 import { useNavigate } from 'react-router-dom';
-
+import FormularioGasto from './Componentes/FormularioGasto';
 
 const App = () => {
   const {usuario}=useAuth();
   const navigate= useNavigate();
-  console.log(usuario);
   useEffect(()=>{
   if (usuario) {
     return
@@ -35,7 +34,7 @@ const App = () => {
     </ContenedorBotones>
     </ContenedorHeader>
     </Header>
-   
+    <FormularioGasto></FormularioGasto>
     </> 
      );
 }
