@@ -31,7 +31,8 @@ const SelectCategorias = ({cambiarCategoria,categoria}) => {
                    key={categoria.id}
                    data-valor={categoria.id}
                    onClick={(e)=>{//handleClick()
-                    cambiarCategoria(e.currentTarget.dataset.valor)
+                    cambiarCategoria(categoria.id)
+                    //e.currentTarget.dataset.valor
                 }}
                    >
                    <IconoCategoria id={categoria.id}></IconoCategoria>
