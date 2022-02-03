@@ -22,7 +22,7 @@ const Boton = styled(NavLink)`
     justify-content: space-between;
     align-items: center;
     outline: none;
- 
+    &:hover{background: #9B69E2}
     svg {
         height: ${(props) => props.iconoGrande ? '100%' : '0.75rem;'};  /* 12px */
         fill: white;

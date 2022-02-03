@@ -4,8 +4,21 @@ import Boton from './../Elementos/Boton'
 import {ReactComponent as Iconoplus} from './../imagenes/plus.svg'
 import SelectCategorias from './SelectCategorias';
 import DatePicker from './DatePicker';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Contextos/AuthContext';
 
 const FormularioGasto = () => {
+  //  import { useNavigate } from 'react-router-dom';
+//import { useAuth } from '../Contextos/AuthContext';
+    const {usuario}=useAuth();
+    const navigate=useNavigate();
+  useEffect(()=>{
+  if (usuario) {
+    return
+  } else{navigate('/iniciar-sesion')} 
+   
+    
+  })
     const [inputDescripcion,cambiarInputDescripcion]=useState('');
     const [inputCantidad,cambiarInputCantidad]=useState('');
     const [categoria,cambiarCategoria]=useState('hogar');
@@ -25,6 +38,7 @@ const FormularioGasto = () => {
 
     const handleSubmit=(e)=>{
         e.preventDefault();
+        console.log(inputDescripcion,inputCantidad,categoria,fecha);
     }
     return ( 
         

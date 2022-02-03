@@ -6,6 +6,7 @@ import { useAuth } from '../Contextos/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const GastosPorCategoria = () => {
+    
     const {usuario}=useAuth();
     const navigate=useNavigate();
     useEffect(()=>{
