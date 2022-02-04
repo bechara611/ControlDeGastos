@@ -6,6 +6,9 @@ import SelectCategorias from './SelectCategorias';
 import DatePicker from './DatePicker';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../Contextos/AuthContext';
+import agregarGasto from '../firebase/AgregarGasto';
+import fromUnixTime from 'date-fns/fromUnixTime'
+import getUnixTime from 'date-fns/getUnixTime'
 
 const FormularioGasto = () => {
   //  import { useNavigate } from 'react-router-dom';
@@ -38,7 +41,17 @@ const FormularioGasto = () => {
 
     const handleSubmit=(e)=>{
         e.preventDefault();
+        let cantidadFloat= parseFloat(inputCantidad).toFixed(2);
+        
         console.log(inputDescripcion,inputCantidad,categoria,fecha);
+     agregarGasto({
+         uidUsuario:usuario.uid,
+         categoria:categoria,
+         descripcion:inputDescripcion,
+         cantidad:cantidadFloat,
+         fecha:getUnixTime(fecha)
+     }) 
+     
     }
     return ( 
         
