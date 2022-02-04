@@ -25,7 +25,7 @@ const SelectCategorias = ({cambiarCategoria,categoria}) => {
         <OpcionSeleccionada>{categoria}<IconoDown></IconoDown></OpcionSeleccionada>
         
         {mostrarSelect &&
-            <Opciones>
+            <Opciones data-valor3='dany'>
              {categorias.map((categoria)=>{
                   return <Opcion
                    key={categoria.id}
