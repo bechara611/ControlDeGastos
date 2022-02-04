@@ -16,12 +16,16 @@ import Fondo from './Elementos/Fondo'
 import Header from './Elementos/Header';
 import {AuthProvider,AuthContext} from './Contextos/AuthContext'
 import { useAuth } from './Contextos/AuthContext';
+import { useNavigate } from 'react-router-dom';
 WebFont.load({
   google: {
     families: ['Work Sans:400,500,700', 'Sans-serif']
   }
 });
 const Index = () => {
+
+    
+
 
   return (
     <>

@@ -3,11 +3,26 @@ import {ContenedorFiltros,Formulario,Input,InputGrande,ContenedorBoton} from './
 import Boton from './../Elementos/Boton'
 import {ReactComponent as Iconoplus} from './../imagenes/plus.svg'
 import SelectCategorias from './SelectCategorias';
+import DatePicker from './DatePicker';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Contextos/AuthContext';
 
 const FormularioGasto = () => {
+  //  import { useNavigate } from 'react-router-dom';
+//import { useAuth } from '../Contextos/AuthContext';
+    const {usuario}=useAuth();
+    const navigate=useNavigate();
+  useEffect(()=>{
+  if (usuario) {
+    return
+  } else{navigate('/iniciar-sesion')} 
+   
+    
+  })
     const [inputDescripcion,cambiarInputDescripcion]=useState('');
     const [inputCantidad,cambiarInputCantidad]=useState('');
     const [categoria,cambiarCategoria]=useState('hogar');
+    const [fecha,cambiarFecha]=useState(new Date());
     const handleChange=(e)=>{
         switch (e.target.name) {
             case 'descripcion':
@@ -20,12 +35,17 @@ const FormularioGasto = () => {
                 break;
         }
     }
+
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        console.log(inputDescripcion,inputCantidad,categoria,fecha);
+    }
     return ( 
         
-        <Formulario>
+        <Formulario onSubmit={handleSubmit}>
             <ContenedorFiltros>
             <SelectCategorias cambiarCategoria={cambiarCategoria} categoria={categoria}></SelectCategorias>
-            <p>DatePicker</p>
+            <DatePicker fecha={fecha} cambiarFecha={cambiarFecha}></DatePicker>
             </ContenedorFiltros>
             <div>
             <Input 
