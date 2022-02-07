@@ -9,6 +9,7 @@ import { useAuth } from '../Contextos/AuthContext';
 import agregarGasto from '../firebase/AgregarGasto';
 import fromUnixTime from 'date-fns/fromUnixTime'
 import getUnixTime from 'date-fns/getUnixTime'
+import Alerta from '../Elementos/Alerta';
 
 const FormularioGasto = () => {
   //  import { useNavigate } from 'react-router-dom';
@@ -26,6 +27,8 @@ const FormularioGasto = () => {
     const [inputCantidad,cambiarInputCantidad]=useState('');
     const [categoria,cambiarCategoria]=useState('hogar');
     const [fecha,cambiarFecha]=useState(new Date());
+    const [estadoAlerta,cambiarEstadoAlerta]=useState(false);
+    const [alerta,cambiarAlerta]=useState({});
     const handleChange=(e)=>{
         switch (e.target.name) {
             case 'descripcion':
@@ -39,18 +42,48 @@ const FormularioGasto = () => {
         }
     }
 
-    const handleSubmit=(e)=>{
+    const handleSubmit=async(e)=>{
+     
+      try {
         e.preventDefault();
         let cantidadFloat= parseFloat(inputCantidad).toFixed(2);
+        //comprobar validaciones
+        if (inputDescripcion!=='' && inputCantidad !=='') 
+        {
+          if (cantidadFloat) {
+            console.log(inputDescripcion,inputCantidad,categoria,fecha);
+            await agregarGasto({
+                uidUsuario:usuario.uid,
+                categoria:categoria,
+                descripcion:inputDescripcion,
+                cantidad:cantidadFloat,
+                fecha:getUnixTime(fecha)
+            }) 
+            cambiarAlerta({tipo:'exito',mensaje:'Success',})
+            cambiarEstadoAlerta(true);
+            cambiarInputDescripcion('');
+            cambiarInputCantidad('');
+            cambiarFecha(new Date());
+            
+
+          }else
+          {
+          cambiarAlerta({tipo:'error',mensaje:'El valor no es correcto',})
+          cambiarEstadoAlerta(true);
+          }
+         
+        }else 
+        {
+          cambiarAlerta({tipo:'error',mensaje:'Por favor complete los campos',})
+          cambiarEstadoAlerta(true);
+        }
         
-        console.log(inputDescripcion,inputCantidad,categoria,fecha);
-     agregarGasto({
-         uidUsuario:usuario.uid,
-         categoria:categoria,
-         descripcion:inputDescripcion,
-         cantidad:cantidadFloat,
-         fecha:getUnixTime(fecha)
-     }) 
+      } catch (error) {
+        cambiarAlerta({tipo:'error',mensaje:'Error:' + error,})
+          cambiarEstadoAlerta(true);
+      }
+        
+        
      
     }
     return ( 
@@ -79,8 +112,15 @@ const FormularioGasto = () => {
             </InputGrande>
             </div>
             <ContenedorBoton><Boton as='button' primario conIcono type='submit'>
-            Agregar Gasto<Iconoplus/>
+            Add expense<Iconoplus/>
             </Boton></ContenedorBoton>
+            <Alerta
+     tipo={alerta.tipo}
+     mensaje={alerta.mensaje}
+     estadoAlerta={estadoAlerta}
+     cambiarEstadoAlerta={cambiarEstadoAlerta}
+      >
+      </Alerta>
         </Formulario>
         
      );
