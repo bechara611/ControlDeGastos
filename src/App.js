@@ -7,6 +7,7 @@ import { auth } from './firebase/FirebaseConfig';
 import { useAuth } from './Contextos/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import FormularioGasto from './Componentes/FormularioGasto';
+import BarraTotalGastado from './Componentes/BarraTotalGastado';
 
 const App = () => {
   const {usuario}=useAuth();
@@ -35,6 +36,7 @@ const App = () => {
     </ContenedorHeader>
     </Header>
     <FormularioGasto></FormularioGasto>
+    <BarraTotalGastado></BarraTotalGastado>
     </> 
      );
 }

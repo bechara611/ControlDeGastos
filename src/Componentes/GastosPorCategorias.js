@@ -4,6 +4,7 @@ import  {Header,Titulo} from './../Elementos/Header'
 import BtnRegresar from '../Elementos/BtnRegresar';
 import { useAuth } from '../Contextos/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import BarraTotalGastado from './BarraTotalGastado';
 
 const GastosPorCategoria = () => {
     
@@ -27,7 +28,7 @@ const GastosPorCategoria = () => {
     <Titulo>Expenses by categories</Titulo>
 
     </Header>
-     
+     <BarraTotalGastado></BarraTotalGastado>
     </> 
      );
 }
