@@ -8,14 +8,14 @@ const SelectCategorias = ({cambiarCategoria,categoria}) => {
     const [mostrarSelect,cambiarMostrarSelect]= useState(false);
     
     const categorias = [
-        {id: 'comida', texto: 'Comida'},
-        {id: 'cuentas y pagos', texto: 'Cuentas y pagos'},
-        {id: 'hogar', texto: 'Hogar'},
-        {id: 'transporte', texto: 'Transporte'},
-        {id: 'ropa', texto: 'Ropa'},
-        {id: 'salud e higiene', texto: 'Salud e Higiene'},
-        {id: 'compras', texto: 'Compras'},
-        {id: 'diversion', texto: 'Diversion'}
+        {id: 'Food', texto:'Food'},
+        {id: 'Bills', texto:'Bills'},
+        {id: 'Home', texto:'Home'},
+        {id: 'Transport', texto:'Transport'},
+        {id: 'Clothes', texto:'Clothes'},
+        {id: 'Health', texto:'Health'},
+        {id: 'Shopping', texto:'Shopping'},
+        {id: 'Fun', texto:'Fun'}
     ]
    const handleClick=(e)=>{
        //cambiarCategoria(categorias[e.c]);

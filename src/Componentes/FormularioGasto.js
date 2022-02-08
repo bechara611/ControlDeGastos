@@ -25,7 +25,7 @@ const FormularioGasto = () => {
   })
     const [inputDescripcion,cambiarInputDescripcion]=useState('');
     const [inputCantidad,cambiarInputCantidad]=useState('');
-    const [categoria,cambiarCategoria]=useState('hogar');
+    const [categoria,cambiarCategoria]=useState('Home');
     const [fecha,cambiarFecha]=useState(new Date());
     const [estadoAlerta,cambiarEstadoAlerta]=useState(false);
     const [alerta,cambiarAlerta]=useState({});

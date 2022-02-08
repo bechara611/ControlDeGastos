@@ -7,26 +7,27 @@ const   useObtenerGastos= () => {
     const [gastos,cambiarGastos]=useState([]);
     const {usuario}=useAuth();
 
-    const consulta =query(
-        collection(db,'gastos'),
-        where('uidUsuario','==',usuario.uid),
-        orderBy('fecha', 'desc'),
-        limit(10)
-    )
   
     useEffect(()=>{
-        const unsuscribe=onSnapshot(collection(db,'gastos'),(snapShot)=>{
+
+        const consulta =query(
+            collection(db,'gastos'),
+            where('uidUsuario','==',usuario.uid),
+            orderBy('fecha', 'desc'),
+            limit(10)
+        )//
+        const unsuscribe=onSnapshot(consulta,(snapShot)=>{
             const arregloGastos=snapShot.docs.map((documento)=>{
-               // console.log(snapShot)
                 return {...documento.data(), id:documento.id}
-                
-            });
-           cambiarGastos(arregloGastos);
-        },(error)=>{console.log(error)})
+            })
+            cambiarGastos(arregloGastos);
+        })
 
         return unsuscribe;
     },[usuario])
     return [gastos]
+
+    
 }
  
 export default useObtenerGastos ;
