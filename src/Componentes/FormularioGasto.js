@@ -10,12 +10,55 @@ import agregarGasto from '../firebase/AgregarGasto';
 import fromUnixTime from 'date-fns/fromUnixTime'
 import getUnixTime from 'date-fns/getUnixTime'
 import Alerta from '../Elementos/Alerta';
+//import {storage,storageRef} from '../firebase/FirebaseConfig'
+import { getStorage, ref, uploadBytes,uploadBytesResumable,getDownloadURL } from "firebase/storage";
+import { storageRef } from '../firebase/FirebaseConfig';
 
 const FormularioGasto = () => {
-  //  import { useNavigate } from 'react-router-dom';
-//import { useAuth } from '../Contextos/AuthContext';
+
+
+  const uploadImage2=()=>{
+
+  
+const storage = getStorage();
+const storageRef = ref(storage, `images/${NombreImagen}`);
+
+const uploadTask = uploadBytesResumable(storageRef, Imagen);
+
+// Register three observers:
+// 1. 'state_changed' observer, called any time the state changes
+// 2. Error observer, called on failure
+// 3. Completion observer, called on successful completion
+ uploadTask.on('state_changed',
+  (snapshot) => {
+    // Observe state change events such as progress, pause, and resume
+    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    console.log('Upload is ' + progress + '% done');
+    switch (snapshot.state) {
+    case 'paused':
+    console.log('Upload is paused');
+    break;
+    case 'running':
+    console.log('Upload is running');
+    break;
+    }
+  },
+  (error) => {
+    console.log(error)
+  },
+  () => {
+    // Handle successful uploads on complete
+    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      console.log('File available at', downloadURL);
+    });
+  }
+);
+  }
     const {usuario}=useAuth();
     const navigate=useNavigate();
+    
   useEffect(()=>{
   if (usuario) {
     return
@@ -29,6 +72,9 @@ const FormularioGasto = () => {
     const [fecha,cambiarFecha]=useState(new Date());
     const [estadoAlerta,cambiarEstadoAlerta]=useState(false);
     const [alerta,cambiarAlerta]=useState({});
+    const [Imagen, setImagen] = useState();
+    const [NombreImagen, setNombreImagen] = useState();
+
     const handleChange=(e)=>{
         switch (e.target.name) {
             case 'descripcion':
@@ -86,6 +132,17 @@ const FormularioGasto = () => {
         
      
     }
+
+   
+
+    const changeImagen = async (e) => {
+    
+      setImagen(e.target.files[0]);
+       console.log(e.target.files[0].name);
+       setNombreImagen(e.target.files[0].name)
+  }
+
+
     return ( 
         
         <Formulario onSubmit={handleSubmit}>
@@ -110,10 +167,13 @@ const FormularioGasto = () => {
               value={inputCantidad}
               onChange={handleChange}>
             </InputGrande>
+            <input type="file" name="imagen" onChange={(e)=>{changeImagen(e)}} />
+            <button onClick={uploadImage2} >GUARDAR IMAGEN</button>
             </div>
             <ContenedorBoton><Boton as='button' primario conIcono type='submit'>
             Add expense<Iconoplus/>
             </Boton></ContenedorBoton>
+           
             <Alerta
      tipo={alerta.tipo}
      mensaje={alerta.mensaje}

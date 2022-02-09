@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getStorage, ref } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey:process.env.REACT_APP_FIREBASE_API_KEY,
@@ -37,9 +38,12 @@ const firebaseConfig3 = {
 
  
 // Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const storage = getStorage(app);
+const storageRef = ref(storage);
 const auth= getAuth();
 const db=getFirestore();
 
-export {app,db,auth,analytics};
+export {app,db,auth,analytics,storage,storageRef};

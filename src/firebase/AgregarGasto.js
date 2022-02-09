@@ -9,7 +9,8 @@ const agregarGasto = async ({descripcion,cantidad,categoria,fecha,uidUsuario}) =
             categoria:categoria,
             descripcion:descripcion,
             cantidad:Number(cantidad),
-            fecha:fecha
+            fecha:fecha,
+            
              })
     } catch (error) {
         console.log(error)
