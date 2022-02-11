@@ -13,9 +13,27 @@ import IconoCategoria from '../Elementos/IconoCategoria';
 import FormatearCantidad from '../Funciones/ConvertirMoneda';
 import {ReactComponent as IconoEditar} from './../imagenes/editar.svg'
 import {ReactComponent as IconoBorrar} from './../imagenes/borrar.svg'
+import {fromUnixTime,format} from 'date-fns'
 
 const ListaDeGastos = () => {
   const [gastos]= useObtenerGastos();
+  const formatearfecha=(fecha)=>{
+    return format(fromUnixTime(fecha),"dd/MM/yyyy");
+  }
+  const fechaesigual = (gastos,index,gasto) => {
+    if (index!==0)
+     {
+       const fechaactual=formatearfecha(gasto.fecha);
+       const fechaanterior=formatearfecha(gastos[index-1].fecha);
+      if (fechaactual===fechaanterior){
+        return true;
+      }
+     }
+    
+    
+  }
+   
+  
   console.log(gastos);
     const {usuario}=useAuth();
     const navigate=useNavigate();
@@ -39,9 +57,12 @@ const ListaDeGastos = () => {
        
         </Header>
         <Lista>
-        {gastos.map((gasto)=>{
+        {gastos.map((gasto,index)=>{
           return (
             <>
+            <>
+            {!fechaesigual(gastos,index,gasto) && <Fecha>{formatearfecha(gasto.fecha)}</Fecha> }
+            
             <ElementoLista key={gasto.id}>
             <Categoria>
             <IconoCategoria
@@ -57,6 +78,8 @@ const ListaDeGastos = () => {
             </ContenedorBotones>
             
             </ElementoLista>
+            </>
+         
             </>
           );
         })}
