@@ -20,6 +20,7 @@ const AuthProvider = ({children}) => {
        const CancelarSuscripcion= onAuthStateChanged(auth,(usuario)=>{
             cambiarUsuario(usuario);
             cambiarCargando(false);
+        
         })
         return CancelarSuscripcion;
     },[])

@@ -36,7 +36,7 @@ const App = () => {
     </ContenedorHeader>
     </Header>
     <FormularioGasto></FormularioGasto>
-    <BarraTotalGastado></BarraTotalGastado>
+  
     </> 
      );
 }

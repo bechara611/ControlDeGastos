@@ -97,7 +97,7 @@ const uploadTask = uploadBytesResumable(storageRef, Imagen);
         if (inputDescripcion!=='' && inputCantidad !=='') 
         {
           if (cantidadFloat) {
-            console.log(inputDescripcion,inputCantidad,categoria,fecha);
+     
             await agregarGasto({
                 uidUsuario:usuario.uid,
                 categoria:categoria,
@@ -167,8 +167,7 @@ const uploadTask = uploadBytesResumable(storageRef, Imagen);
               value={inputCantidad}
               onChange={handleChange}>
             </InputGrande>
-            <input type="file" name="imagen" onChange={(e)=>{changeImagen(e)}} />
-            <button onClick={uploadImage2} >GUARDAR IMAGEN</button>
+            
             </div>
             <ContenedorBoton><Boton as='button' primario conIcono type='submit'>
             Add expense<Iconoplus/>
