@@ -42,6 +42,7 @@ const Index = () => {
     <Route path='/lista' element={<ListaDeGastos/>}/ >
     <Route path='/editar/:id' element={<EditarGastos/>}/ >
     <Route path='/' element={<App/>}/ >
+    <Route path='' element={<App/>}/ >
     <Route path='/*' element={<App/>}/ >
     </Routes>  
      </Contenedor>
