@@ -23,7 +23,7 @@ const App = () => {
     <>
   
     <Helmet>
-    <title>Agregar gastos</title>
+    <title>Add</title>
     </Helmet>
     <Header>
     <ContenedorHeader>

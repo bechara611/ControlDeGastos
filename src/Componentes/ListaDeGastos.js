@@ -16,7 +16,8 @@ import {ReactComponent as IconoBorrar} from './../imagenes/borrar.svg'
 import {fromUnixTime,format} from 'date-fns'
 
 const ListaDeGastos = () => {
-  const [gastos]= useObtenerGastos();
+  const [gastos,ObtenerMasGastos,hayMasPorCargar]= useObtenerGastos();
+
   const formatearfecha=(fecha)=>{
     return format(fromUnixTime(fecha),"dd/MM/yyyy");
   }
@@ -34,9 +35,10 @@ const ListaDeGastos = () => {
   }
    
   
-  console.log(gastos);
+
     const {usuario}=useAuth();
     const navigate=useNavigate();
+   
   useEffect(()=>{
   if (usuario) {
     return
@@ -83,9 +85,14 @@ const ListaDeGastos = () => {
             </>
           );
         })}
-        <ContenedorBotonCentral>
-        <BotonCargarMas>Load more</BotonCargarMas>
-        </ContenedorBotonCentral>
+
+        {hayMasPorCargar && 
+          <ContenedorBotonCentral>
+          <BotonCargarMas onClick={()=>ObtenerMasGastos()}>Load more</BotonCargarMas>
+          </ContenedorBotonCentral>
+        }
+       
+       
         {gastos.length===0 && 
         <ContenedorSubtitulo>
         <Subtitulo>Empty</Subtitulo>
