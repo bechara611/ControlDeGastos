@@ -14,14 +14,12 @@ import FormatearCantidad from '../Funciones/ConvertirMoneda';
 import {ReactComponent as IconoEditar} from './../imagenes/editar.svg'
 import {ReactComponent as IconoBorrar} from './../imagenes/borrar.svg'
 import {fromUnixTime,format} from 'date-fns'
+import BorrarDocumento from '../firebase/BorrarGasto';
 
 const ListaDeGastos = () => {
   const [gastos,ObtenerMasGastos,hayMasPorCargar]= useObtenerGastos();
   const [gastoTOTAL, cambiargastoTOTAL] = useState(0);
-  const BorrarElemento = (gastoId) => {
-    return ( <></> );
-  }
-   
+ 
 
   const totaal = () => {
      let numero=0;
@@ -96,7 +94,7 @@ useEffect(()=>{
             <Valor>{FormatearCantidad(gasto.cantidad)}</Valor>
             <ContenedorBotones>
             <BotonAccion onClick={()=>{
-              BorrarElemento()
+              BorrarDocumento(gasto.id)
             }}><IconoBorrar></IconoBorrar></BotonAccion>
             </ContenedorBotones>
             
