@@ -18,6 +18,11 @@ import {fromUnixTime,format} from 'date-fns'
 const ListaDeGastos = () => {
   const [gastos,ObtenerMasGastos,hayMasPorCargar]= useObtenerGastos();
   const [gastoTOTAL, cambiargastoTOTAL] = useState(0);
+  const BorrarElemento = (gastoId) => {
+    return ( <></> );
+  }
+   
+
   const totaal = () => {
      let numero=0;
     let i=0;
@@ -90,8 +95,9 @@ useEffect(()=>{
             <Descripcion>{gasto.descripcion}</Descripcion>
             <Valor>{FormatearCantidad(gasto.cantidad)}</Valor>
             <ContenedorBotones>
-            <BotonAccion as={Link} to={`/editar/${gasto.id}`}><IconoEditar></IconoEditar></BotonAccion>
-            <BotonAccion><IconoBorrar></IconoBorrar></BotonAccion>
+            <BotonAccion onClick={()=>{
+              BorrarElemento()
+            }}><IconoBorrar></IconoBorrar></BotonAccion>
             </ContenedorBotones>
             
             </ElementoLista>

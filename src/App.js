@@ -29,7 +29,6 @@ const App = () => {
     <ContenedorHeader>
     <Titulo>Add expenses</Titulo>
     <ContenedorBotones>
-    <Boton to='/categorias'>Categories</Boton>
     <Boton to='/lista'>Expenses List</Boton>
     <BotonCerrarSesion></BotonCerrarSesion>
     </ContenedorBotones>
